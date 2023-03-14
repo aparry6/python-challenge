@@ -1,0 +1,87 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2580
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fnil\fcharset0 Menlo-Regular;}
+{\colortbl;\red255\green255\blue255;\red183\green111\blue179;\red0\green0\blue0;\red255\green255\blue255;
+\red67\green192\blue160;\red106\green152\blue85;\red140\green211\blue254;\red202\green202\blue202;\red194\green126\blue101;
+\red167\green197\blue152;\red70\green137\blue204;\red212\green214\blue154;}
+{\*\expandedcolortbl;;\cssrgb\c77255\c52549\c75294;\cssrgb\c0\c0\c0;\cssrgb\c100000\c100000\c100000;
+\cssrgb\c30588\c78824\c69020;\cssrgb\c48627\c65098\c40784;\cssrgb\c61176\c86275\c99608;\cssrgb\c83137\c83137\c83137;\cssrgb\c80784\c56863\c47059;
+\cssrgb\c70980\c80784\c65882;\cssrgb\c33725\c61176\c83922;\cssrgb\c86275\c86275\c66667;}
+\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\deftab720
+\pard\pardeftab720\sl360\partightenfactor0
+
+\f0\fs24 \cf2 \cb3 \expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 import\cf4 \strokec4  \cf5 \strokec5 csv\cf4 \cb1 \strokec4 \
+\cf2 \cb3 \strokec2 from\cf4 \strokec4  \cf5 \strokec5 datetime\cf4 \strokec4  \cf2 \strokec2 import\cf4 \strokec4  \cf5 \strokec5 datetime\cf4 \cb1 \strokec4 \
+\
+\pard\pardeftab720\sl360\partightenfactor0
+\cf6 \cb3 \strokec6 # Set file name\cf4 \cb1 \strokec4 \
+\pard\pardeftab720\sl360\partightenfactor0
+\cf7 \cb3 \strokec7 file_name\cf4 \strokec4  \cf8 \strokec8 =\cf4 \strokec4  \cf9 \strokec9 "budget_data.csv"\cf4 \cb1 \strokec4 \
+\
+\pard\pardeftab720\sl360\partightenfactor0
+\cf6 \cb3 \strokec6 # Set initial values\cf4 \cb1 \strokec4 \
+\pard\pardeftab720\sl360\partightenfactor0
+\cf7 \cb3 \strokec7 total_months\cf4 \strokec4  \cf8 \strokec8 =\cf4 \strokec4  \cf10 \strokec10 0\cf4 \cb1 \strokec4 \
+\cf7 \cb3 \strokec7 total_profit_loss\cf4 \strokec4  \cf8 \strokec8 =\cf4 \strokec4  \cf10 \strokec10 0\cf4 \cb1 \strokec4 \
+\cf7 \cb3 \strokec7 previous_profit_loss\cf4 \strokec4  \cf8 \strokec8 =\cf4 \strokec4  \cf11 \strokec11 None\cf4 \cb1 \strokec4 \
+\cf7 \cb3 \strokec7 profit_loss_changes\cf4 \strokec4  \cf8 \strokec8 =\cf4 \strokec4  []\cb1 \
+\cf7 \cb3 \strokec7 greatest_increase\cf4 \strokec4  \cf8 \strokec8 =\cf4 \strokec4  \{\cf9 \strokec9 "date"\cf4 \strokec4 : \cf11 \strokec11 None\cf4 \strokec4 , \cf9 \strokec9 "amount"\cf4 \strokec4 : \cf10 \strokec10 0\cf4 \strokec4 \}\cb1 \
+\cf7 \cb3 \strokec7 greatest_decrease\cf4 \strokec4  \cf8 \strokec8 =\cf4 \strokec4  \{\cf9 \strokec9 "date"\cf4 \strokec4 : \cf11 \strokec11 None\cf4 \strokec4 , \cf9 \strokec9 "amount"\cf4 \strokec4 : \cf10 \strokec10 0\cf4 \strokec4 \}\cb1 \
+\
+\pard\pardeftab720\sl360\partightenfactor0
+\cf6 \cb3 \strokec6 # Open CSV file and read it\cf4 \cb1 \strokec4 \
+\pard\pardeftab720\sl360\partightenfactor0
+\cf2 \cb3 \strokec2 with\cf4 \strokec4  \cf12 \strokec12 open\cf4 \strokec4 (\cf7 \strokec7 file_name\cf4 \strokec4 , \cf9 \strokec9 "r"\cf4 \strokec4 ) \cf2 \strokec2 as\cf4 \strokec4  \cf7 \strokec7 file\cf4 \strokec4 :\cb1 \
+\pard\pardeftab720\sl360\partightenfactor0
+\cf4 \cb3     \cf7 \strokec7 csv_reader\cf4 \strokec4  \cf8 \strokec8 =\cf4 \strokec4  \cf5 \strokec5 csv\cf4 \strokec4 .\cf12 \strokec12 reader\cf4 \strokec4 (\cf7 \strokec7 file\cf4 \strokec4 , \cf7 \strokec7 delimiter\cf8 \strokec8 =\cf9 \strokec9 ","\cf4 \strokec4 )\cb1 \
+\
+\cb3     \cf6 \strokec6 # Skip header row\cf4 \cb1 \strokec4 \
+\cb3     \cf12 \strokec12 next\cf4 \strokec4 (\cf7 \strokec7 csv_reader\cf4 \strokec4 )\cb1 \
+\
+\cb3     \cf6 \strokec6 # Loop through each row in CSV file\cf4 \cb1 \strokec4 \
+\cb3     \cf2 \strokec2 for\cf4 \strokec4  \cf7 \strokec7 row\cf4 \strokec4  \cf2 \strokec2 in\cf4 \strokec4  \cf7 \strokec7 csv_reader\cf4 \strokec4 :\cb1 \
+\cb3         \cf6 \strokec6 # Count the total number of months\cf4 \cb1 \strokec4 \
+\cb3         \cf7 \strokec7 total_months\cf4 \strokec4  \cf8 \strokec8 +=\cf4 \strokec4  \cf10 \strokec10 1\cf4 \cb1 \strokec4 \
+\
+\cb3         \cf6 \strokec6 # Get profit/loss for current month\cf4 \cb1 \strokec4 \
+\cb3         \cf7 \strokec7 profit_loss\cf4 \strokec4  \cf8 \strokec8 =\cf4 \strokec4  \cf5 \strokec5 int\cf4 \strokec4 (\cf7 \strokec7 row\cf4 \strokec4 [\cf10 \strokec10 1\cf4 \strokec4 ])\cb1 \
+\
+\cb3         \cf6 \strokec6 # Add profit/loss to total\cf4 \cb1 \strokec4 \
+\cb3         \cf7 \strokec7 total_profit_loss\cf4 \strokec4  \cf8 \strokec8 +=\cf4 \strokec4  \cf7 \strokec7 profit_loss\cf4 \cb1 \strokec4 \
+\
+\cb3         \cf6 \strokec6 # Calculate change in profit/loss since previous month\cf4 \cb1 \strokec4 \
+\cb3         \cf2 \strokec2 if\cf4 \strokec4  \cf7 \strokec7 previous_profit_loss\cf4 \strokec4  \cf11 \strokec11 is\cf4 \strokec4  \cf11 \strokec11 not\cf4 \strokec4  \cf11 \strokec11 None\cf4 \strokec4 :\cb1 \
+\cb3             \cf7 \strokec7 change\cf4 \strokec4  \cf8 \strokec8 =\cf4 \strokec4  \cf7 \strokec7 profit_loss\cf4 \strokec4  \cf8 \strokec8 -\cf4 \strokec4  \cf7 \strokec7 previous_profit_loss\cf4 \cb1 \strokec4 \
+\cb3             \cf7 \strokec7 profit_loss_changes\cf4 \strokec4 .\cf12 \strokec12 append\cf4 \strokec4 (\cf7 \strokec7 change\cf4 \strokec4 )\cb1 \
+\
+\cb3             \cf6 \strokec6 # Check if greatest increase or decrease in profits\cf4 \cb1 \strokec4 \
+\cb3             \cf2 \strokec2 if\cf4 \strokec4  \cf7 \strokec7 change\cf4 \strokec4  \cf8 \strokec8 >\cf4 \strokec4  \cf7 \strokec7 greatest_increase\cf4 \strokec4 [\cf9 \strokec9 "amount"\cf4 \strokec4 ]:\cb1 \
+\cb3                 \cf7 \strokec7 greatest_increase\cf4 \strokec4 [\cf9 \strokec9 "date"\cf4 \strokec4 ] \cf8 \strokec8 =\cf4 \strokec4  \cf7 \strokec7 row\cf4 \strokec4 [\cf10 \strokec10 0\cf4 \strokec4 ]\cb1 \
+\cb3                 \cf7 \strokec7 greatest_increase\cf4 \strokec4 [\cf9 \strokec9 "amount"\cf4 \strokec4 ] \cf8 \strokec8 =\cf4 \strokec4  \cf7 \strokec7 change\cf4 \cb1 \strokec4 \
+\
+\cb3             \cf2 \strokec2 if\cf4 \strokec4  \cf7 \strokec7 change\cf4 \strokec4  \cf8 \strokec8 <\cf4 \strokec4  \cf7 \strokec7 greatest_decrease\cf4 \strokec4 [\cf9 \strokec9 "amount"\cf4 \strokec4 ]:\cb1 \
+\cb3                 \cf7 \strokec7 greatest_decrease\cf4 \strokec4 [\cf9 \strokec9 "date"\cf4 \strokec4 ] \cf8 \strokec8 =\cf4 \strokec4  \cf7 \strokec7 row\cf4 \strokec4 [\cf10 \strokec10 0\cf4 \strokec4 ]\cb1 \
+\cb3                 \cf7 \strokec7 greatest_decrease\cf4 \strokec4 [\cf9 \strokec9 "amount"\cf4 \strokec4 ] \cf8 \strokec8 =\cf4 \strokec4  \cf7 \strokec7 change\cf4 \cb1 \strokec4 \
+\
+\cb3         \cf6 \strokec6 # Set previous profit/loss for next iteration\cf4 \cb1 \strokec4 \
+\cb3         \cf7 \strokec7 previous_profit_loss\cf4 \strokec4  \cf8 \strokec8 =\cf4 \strokec4  \cf7 \strokec7 profit_loss\cf4 \cb1 \strokec4 \
+\
+\pard\pardeftab720\sl360\partightenfactor0
+\cf6 \cb3 \strokec6 # Calculate average change in profit/loss\cf4 \cb1 \strokec4 \
+\pard\pardeftab720\sl360\partightenfactor0
+\cf7 \cb3 \strokec7 average_change\cf4 \strokec4  \cf8 \strokec8 =\cf4 \strokec4  \cf12 \strokec12 sum\cf4 \strokec4 (\cf7 \strokec7 profit_loss_changes\cf4 \strokec4 ) \cf8 \strokec8 /\cf4 \strokec4  \cf12 \strokec12 len\cf4 \strokec4 (\cf7 \strokec7 profit_loss_changes\cf4 \strokec4 )\cb1 \
+\
+\pard\pardeftab720\sl360\partightenfactor0
+\cf6 \cb3 \strokec6 # Print results to console\cf4 \cb1 \strokec4 \
+\pard\pardeftab720\sl360\partightenfactor0
+\cf12 \cb3 \strokec12 print\cf4 \strokec4 (\cf9 \strokec9 "Financial Analysis"\cf4 \strokec4 )\cb1 \
+\cf12 \cb3 \strokec12 print\cf4 \strokec4 (\cf9 \strokec9 "------------------"\cf4 \strokec4 )\cb1 \
+\cf12 \cb3 \strokec12 print\cf4 \strokec4 (\cf11 \strokec11 f\cf9 \strokec9 "Total Months: \cf11 \strokec11 \{\cf7 \strokec7 total_months\cf11 \strokec11 \}\cf9 \strokec9 "\cf4 \strokec4 )\cb1 \
+\cf12 \cb3 \strokec12 print\cf4 \strokec4 (\cf11 \strokec11 f\cf9 \strokec9 "Total: $\cf11 \strokec11 \{\cf7 \strokec7 total_profit_loss\cf11 \strokec11 \}\cf9 \strokec9 "\cf4 \strokec4 )\cb1 \
+\cf12 \cb3 \strokec12 print\cf4 \strokec4 (\cf11 \strokec11 f\cf9 \strokec9 "Average Change: $\cf11 \strokec11 \{\cf7 \strokec7 average_change\cf11 \strokec11 :.2f\}\cf9 \strokec9 "\cf4 \strokec4 )\cb1 \
+\cf12 \cb3 \strokec12 print\cf4 \strokec4 (\cf11 \strokec11 f\cf9 \strokec9 "Greatest Increase in Profits: \cf11 \strokec11 \{\cf7 \strokec7 greatest_increase\cf4 \strokec4 [\cf9 \strokec9 'date'\cf4 \strokec4 ]\cf11 \strokec11 \}\cf9 \strokec9  ($\cf11 \strokec11 \{\cf7 \strokec7 greatest_increase\cf4 \strokec4 [\cf9 \strokec9 'amount'\cf4 \strokec4 ]\cf11 \strokec11 \}\cf9 \strokec9 )"\cf4 \strokec4 )\cb1 \
+\cf12 \cb3 \strokec12 print\cf4 \strokec4 (\cf11 \strokec11 f\cf9 \strokec9 "Greatest Decrease in Profits: \cf11 \strokec11 \{\cf7 \strokec7 greatest_decrease\cf4 \strokec4 [\cf9 \strokec9 'date'\cf4 \strokec4 ]\cf11 \strokec11 \}\cf9 \strokec9  ($\cf11 \strokec11 \{\cf7 \strokec7 greatest_decrease\cf4 \strokec4 [\cf9 \strokec9 'amount'\cf4 \strokec4 ]\cf11 \strokec11 \}\cf9 \strokec9 )"\cf4 \strokec4 )\cb1 \
+\
+\
+}
